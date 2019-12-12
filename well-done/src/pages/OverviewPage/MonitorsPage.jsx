@@ -27,6 +27,7 @@ const MonitorsPage = ({ history }) => {
         setUnPumps(res.data.filter(pump => pump.status === 1));
         setNonPumps(
           res.data.filter(pump => pump.status === 0 || pump.status === null)
+          
         );
       });
   }, []);

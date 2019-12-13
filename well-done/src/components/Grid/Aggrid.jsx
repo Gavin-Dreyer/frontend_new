@@ -97,21 +97,24 @@ class Grid extends Component {
   }
 
   componentDidMount = () => {
-    // const token = localStorage.getItem('token')
-    // console.log(token)
-    // fetch(`${process.env.REACT_APP_HEROKU_API}/api/sensors/recent`, {
-    //   method: 'GET',
-    //   mode: 'cors',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `${token}`,
-    //   },
-    // })
-    //   .then(result => result.json())
-    //   // .then(rowData => this.setState({ rowData }))
-    //   .then(rowData => console.log(rowData, 'ROWDATA'))
+    const token = localStorage.getItem('token')
+    console.log(token)
+    fetch(`${process.env.REACT_APP_HEROKU_API}/api/sensors/recent`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${token}`,
+      },
+    })
+      .then(result => result.json())
+      // .then(rowData => this.setState({ rowData }))
+      .then(rowData => console.log(rowData, 'ROWDATA'))
     //   .catch(err => console.log(err))
-    this.setState(this.props.sensors)
+  }
+
+  componentDidUpdate = () => {
+    // this.setState(this.props.sensors)
   }
 
   onGridReady = params => {
@@ -130,7 +133,7 @@ class Grid extends Component {
   }
 
   render() {
-    console.log(this.props.sensors, 'CONSOLEROWDATA')
+    console.log(this.state, 'STATE!')
     return (
       <div>
         <Button

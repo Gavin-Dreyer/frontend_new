@@ -7,7 +7,7 @@ import AxiosWithAuth from '../components/AxiosWithAuth/axiosWithAuth'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchSensors } from '../actions/sensorActions'
 import { fetchHistory } from '../actions/sensorHistory'
-
+import Can from '../components/Can'
 const Dashboard = props => {
   console.log('props in Dashboard', props.sensors)
   const [viewport, setViewport] = useState({
@@ -86,6 +86,7 @@ const Dashboard = props => {
   }
 
   return (
+    
     <div class='dashboard'>
       <Menu history={history} />
       <Map
@@ -115,6 +116,7 @@ const Dashboard = props => {
         setUnknownToggle={setUnknownToggle}
       />
     </div>
+    
   )
 }
 

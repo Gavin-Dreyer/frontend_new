@@ -7,6 +7,10 @@ import StatusCards from "./StatusCards";
 import Grid from "../../components/Grid/Aggrid";
 import PercentageChart from "./PercentageChart";
 
+//redux
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchSensors } from '../../actions/sensorActions'
+
 // ant design style
 import { Row, Col, Layout } from "antd";
 import "antd/dist/antd.css";
@@ -18,18 +22,22 @@ const MonitorsPage = ({ history }) => {
   const [unPumps, setUnPumps] = useState([]);
   const [nonPumps, setNonPumps] = useState([]);
 
+  const sensorSelector = useSelector(state => state.sensorReducer)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    AxiosWithAuth()
-      .get(`${process.env.REACT_APP_HEROKU_API}/api/sensors/recent`)
-      .then(res => {
-        setPumpData(res.data);
-        setFuncPumps(res.data.filter(pump => pump.status === 2));
-        setUnPumps(res.data.filter(pump => pump.status === 1));
-        setNonPumps(
-          res.data.filter(pump => pump.status === 0 || pump.status === null)
-        );
-      });
+       dispatch(fetchSensors)
   }, []);
+  
+
+  useEffect(() => {
+    setPumpData(sensorSelector.sensors);
+        setFuncPumps(sensorSelector.sensors.filter(pump => pump.status === 2));
+        setUnPumps(sensorSelector.sensors.filter(pump => pump.status === 1));
+        setNonPumps(
+          sensorSelector.sensors.filter(pump => pump.status === 0 || pump.status === null)
+        );
+  },[])
 
   return (
     <div>

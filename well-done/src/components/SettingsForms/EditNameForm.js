@@ -60,7 +60,7 @@ const EditNameForm = props => {
       .then(res => {
         console.log("res", res.data);
         var temp = res.data;
-        temp.password = account.password;
+        // temp.password = account.password;
         var nameSplit = account.new_name.split(" ");
         temp.first_name = nameSplit[0];
         temp.last_name = nameSplit[1];
@@ -74,10 +74,7 @@ const EditNameForm = props => {
   const updateUserData = (newData, accountID) => {
     console.log(newData, accountID);
     axiosWithAuth()
-      .put(
-        `${process.env.REACT_APP_HEROKU_API}/api/accounts/${accountID}`,
-        newData
-      )
+      .put(   `${process.env.REACT_APP_HEROKU_API}/api/accounts/${accountID}`, newData)
       .then(res => {
         console.log("res", res.data);
         localStorage.setItem("userId", res.data.id);

@@ -75,7 +75,7 @@ const MonitorsPage = ({ history }) => {
               offset={1}
               style={{ maxWidth: '600px', minWidth: '270px' }}
             >
-              <Grid />
+              <Grid sensors={sensorSelector.sensors} />
             </Col>
 
             {/* Percentage Chart */}

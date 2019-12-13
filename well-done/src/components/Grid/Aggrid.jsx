@@ -93,6 +93,7 @@ class Grid extends Component {
         //   type: "numericColumn"
         // }
       ],
+      sensors: [],
     }
   }
 
@@ -113,8 +114,13 @@ class Grid extends Component {
     //   .catch(err => console.log(err))
   }
 
-  componentDidUpdate = () => {
-    // this.setState(this.props.sensors)
+  componentDidUpdate(prevProps) {
+    // if (this.props.sensors) {
+    //   this.setState({ ...this.state, sensors: this.props.sensors })
+    // }
+    if (this.props !== prevProps) {
+      this.setState({ ...this.state, sensors: this.props.sensors })
+    }
   }
 
   onGridReady = params => {
@@ -173,7 +179,7 @@ class Grid extends Component {
         >
           <AgGridReact
             columnDefs={this.state.columnDefs}
-            rowData={this.state.rowData}
+            rowData={this.state.sensors}
             gridOptions={gridOptions}
             modules={this.state.modules}
             defaultColDef={this.state.defaultColDef}

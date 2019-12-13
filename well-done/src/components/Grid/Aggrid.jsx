@@ -122,7 +122,7 @@ class Grid extends Component {
 
     if (this.state !== prevState) {
       // this.setState({ ...this.state, sensors: this.props.sensors })
-      console.log('ok', this.state.sensors)
+      // console.log('ok', this.state.sensors)
     }
   }
 
@@ -138,7 +138,6 @@ class Grid extends Component {
           // item.physical_id.toString().includes(filteredItem) ||
           //   item.physical_id.toString() === null
         ) {
-          console.log(item)
           return item
         }
       }),
@@ -154,8 +153,12 @@ class Grid extends Component {
 
   submitSearch = e => {
     e.preventDefault()
-
     this.setState({ search: '' })
+  }
+
+  reset = e => {
+    e.preventDefault()
+    this.setState({ sensors: this.props.sensors })
   }
 
   onGridReady = params => {
@@ -184,6 +187,7 @@ class Grid extends Component {
             onChange={this.handleChange}
           />
         </form>
+        <button onClick={e => this.reset(e)}>Reset</button>
         <Button
           type='default'
           icon='download'

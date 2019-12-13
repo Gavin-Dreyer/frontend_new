@@ -58,24 +58,13 @@ const EditNameForm = props => {
     axiosWithAuth()
       .get(`${process.env.REACT_APP_HEROKU_API}/api/accounts/${accountID}`)
       .then(res => {
-<<<<<<< HEAD
-        console.log("res", res.data);
-        var temp = res.data;
-        // temp.password = account.password;
-        var nameSplit = account.new_name.split(" ");
-        temp.first_name = nameSplit[0];
-        temp.last_name = nameSplit[1];
-        updateUserData(temp, accountID);
-=======
         console.log('res', res.data)
         var temp = res.data
         // temp.password = account.password
         var nameSplit = account.new_name.split(' ')
         temp.first_name = nameSplit[0]
         temp.last_name = nameSplit[1]
-        console.log(temp)
         updateUserData(temp, accountID)
->>>>>>> 6636ff5fa9151030d8fbd48b09a6583d5e759fe5
       })
       .catch(err => {
         console.log(err)
@@ -85,7 +74,10 @@ const EditNameForm = props => {
   const updateUserData = (newData, accountID) => {
     console.log(newData, accountID)
     axiosWithAuth()
-      .put(   `${process.env.REACT_APP_HEROKU_API}/api/accounts/${accountID}`, newData)
+      .put(
+        `${process.env.REACT_APP_HEROKU_API}/api/accounts/${accountID}`,
+        newData
+      )
       .then(res => {
         console.log('res', res.data)
         localStorage.setItem('userId', res.data.id)

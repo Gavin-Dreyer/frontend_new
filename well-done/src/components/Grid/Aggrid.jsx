@@ -94,33 +94,67 @@ class Grid extends Component {
         // }
       ],
       sensors: [],
+      search: '',
     }
   }
 
-  componentDidMount = () => {
-    const token = localStorage.getItem('token')
-    console.log(token)
-    fetch(`${process.env.REACT_APP_HEROKU_API}/api/sensors/recent`, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `${token}`,
-      },
-    })
-      .then(result => result.json())
-      // .then(rowData => this.setState({ rowData }))
-      .then(rowData => console.log(rowData, 'ROWDATA'))
-    //   .catch(err => console.log(err))
-  }
+  // componentDidMount = () => {
+  //   const token = localStorage.getItem('token')
+  //   console.log(token)
+  //   fetch(`${process.env.REACT_APP_HEROKU_API}/api/sensors/recent`, {
+  //     method: 'GET',
+  //     mode: 'cors',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `${token}`,
+  //     },
+  //   })
+  //     .then(result => result.json())
+  //     // .then(rowData => this.setState({ rowData }))
+  //     .then(rowData => console.log(rowData, 'ROWDATA'))
+  //   //   .catch(err => console.log(err))
+  // }
 
-  componentDidUpdate(prevProps) {
-    // if (this.props.sensors) {
-    //   this.setState({ ...this.state, sensors: this.props.sensors })
-    // }
+  componentDidUpdate(prevProps, prevState) {
     if (this.props !== prevProps) {
       this.setState({ ...this.state, sensors: this.props.sensors })
     }
+
+    if (this.state !== prevState) {
+      // this.setState({ ...this.state, sensors: this.props.sensors })
+      console.log('ok', this.state.sensors)
+    }
+  }
+
+  taskFilter = filteredItem => {
+    // console.log(filteredItem, 'filtered item here')
+    this.setState({
+      sensors: this.state.sensors.filter(item => {
+        if (item.province_name.toLowerCase().includes(filteredItem)) {
+          return item
+        }
+        // console.log(
+        //   item,
+        //   filteredItem,
+        //   item.province_name.toLowerCase().includes(filteredItem),
+        //   'filtered item here'
+        // )
+      }),
+    })
+
+    console.log(this.state.sensors, 'line 137')
+  }
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  submitSearch = e => {
+    e.preventDefault()
+    this.taskFilter(this.state.search)
+    this.setState({ ...this.state, search: '' })
   }
 
   onGridReady = params => {
@@ -139,9 +173,17 @@ class Grid extends Component {
   }
 
   render() {
-    console.log(this.state, 'STATE!')
+    console.log(this.props)
     return (
       <div>
+        <form onSubmit={this.submitSearch}>
+          <input
+            type='text'
+            name='search'
+            value={this.state.search}
+            onChange={this.handleChange}
+          />
+        </form>
         <Button
           type='default'
           icon='download'

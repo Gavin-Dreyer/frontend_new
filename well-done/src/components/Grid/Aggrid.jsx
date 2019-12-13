@@ -130,31 +130,32 @@ class Grid extends Component {
     // console.log(filteredItem, 'filtered item here')
     this.setState({
       sensors: this.state.sensors.filter(item => {
-        if (item.province_name.toLowerCase().includes(filteredItem)) {
+        if (
+          item.province_name.toLowerCase().includes(filteredItem) ||
+          item.org_name.toLowerCase().includes(filteredItem) ||
+          item.district_name.toLowerCase().includes(filteredItem) ||
+          item.commune_name.toLowerCase().includes(filteredItem)
+          // item.physical_id.toString().includes(filteredItem) ||
+          //   item.physical_id.toString() === null
+        ) {
+          console.log(item)
           return item
         }
-        // console.log(
-        //   item,
-        //   filteredItem,
-        //   item.province_name.toLowerCase().includes(filteredItem),
-        //   'filtered item here'
-        // )
       }),
     })
-
-    console.log(this.state.sensors, 'line 137')
   }
 
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
     })
+    this.taskFilter(this.state.search)
   }
 
   submitSearch = e => {
     e.preventDefault()
-    this.taskFilter(this.state.search)
-    this.setState({ ...this.state, search: '' })
+
+    this.setState({ search: '' })
   }
 
   onGridReady = params => {
@@ -173,7 +174,6 @@ class Grid extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <form onSubmit={this.submitSearch}>

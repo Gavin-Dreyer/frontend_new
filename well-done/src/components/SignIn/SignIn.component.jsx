@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import {useDispatch} from 'react-redux'
+import {fetchLogin} from '../redux-actions/login-action'
+
 
 import { Form, Icon, Input, Button, Row, Col, Typography } from "antd";
 import "antd/dist/antd.css";
@@ -14,21 +17,29 @@ const SignIn = props => {
     setAccount({ ...account, [event.target.name]: event.target.value });
   };
 
+  // const handleSubmit = event => {
+  //   event.preventDefault();
+  //   console.log("submit", account);
+  //   axios
+  //     .post(`${process.env.REACT_APP_HEROKU_API}/api/auth/login`, account)
+  //     .then(res => {
+  //       console.log("res", res.data);
+  //       localStorage.setItem("token", res.data.token);
+  //       localStorage.setItem("userId", res.data.id);
+  //       props.history.push("/dashboard");
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+
+  const dispatch = useDispatch()
+
   const handleSubmit = event => {
-    event.preventDefault();
-    console.log("submit", account);
-    axios
-      .post(`${process.env.REACT_APP_HEROKU_API}/api/auth/login`, account)
-      .then(res => {
-        console.log("res", res.data);
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("userId", res.data.id);
-        props.history.push("/dashboard");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+    event.preventDefault()
+    dispatch(fetchLogin(account))
+    props.history.push('/dashboard')
+  }
 
   return (
     <Row>

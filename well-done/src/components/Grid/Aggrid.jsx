@@ -118,12 +118,29 @@ class Grid extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props !== prevProps) {
       this.setState({ ...this.state, sensors: this.props.sensors })
+
+      if (this.state.sensors.length > 0) {
+        this.addStringToStatus()
+      }
     }
 
-    if (this.state !== prevState) {
-      // this.setState({ ...this.state, sensors: this.props.sensors })
-      // console.log('ok', this.state.sensors)
+    if (prevState !== this.state && this.state !== this.props) {
+      this.addStringToStatus()
     }
+
+    console.log(prevState, this.state)
+  }
+
+  addStringToStatus() {
+    this.setState({
+      sensors: this.state.sensors.map(item => {
+        if (item.status === null) {
+          return (item = { ...item, status: 'N/A' })
+        } else {
+          return item
+        }
+      }),
+    })
   }
 
   taskFilter = filteredItem => {
@@ -134,10 +151,15 @@ class Grid extends Component {
           item.province_name.toLowerCase().includes(filteredItem) ||
           item.org_name.toLowerCase().includes(filteredItem) ||
           item.district_name.toLowerCase().includes(filteredItem) ||
-          item.commune_name.toLowerCase().includes(filteredItem)
-          // item.physical_id.toString().includes(filteredItem) ||
-          //   item.physical_id.toString() === null
+          item.commune_name.toLowerCase().includes(filteredItem) ||
+          item.physical_id.toString().includes(filteredItem) ||
+          item.status
+            .toString()
+            .toLowerCase()
+            .includes(filteredItem)
         ) {
+          console.log(item)
+          // return (item = { ...item, status: 'N/A' })
           return item
         }
       }),

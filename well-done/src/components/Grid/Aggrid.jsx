@@ -124,6 +124,7 @@ class Grid extends Component {
       }
     }
 
+    // console.log(prevState, this.state, 'example')
     if (prevState.sensors.length !== this.state.sensors.length) {
       this.addStringToStatus()
     }

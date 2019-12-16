@@ -3,7 +3,6 @@ import ReactMapGl, { Popup } from 'react-map-gl'
 import './Map.styles.scss'
 import PopupInfo from '../PopupInfo/PopupInfo.component'
 import Pin from '../Pin/Pin.component'
-import AxiosWithAuth from '../AxiosWithAuth/axiosWithAuth'
 
 export default function Map(props) {
   console.log('props in Map', props)
